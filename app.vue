@@ -4,6 +4,7 @@
       University of Alaska Fairbanks • International Arctic Research Center
     </div>
     <header>
+      <img src="@/assets/ak_shadowed.png" alt="" />
       <h1>Alaska Sea Ice</h1>
       <h2>
         View sea ice locations and coverage compared to ice conditions, weather
