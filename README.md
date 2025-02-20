@@ -1,75 +1,39 @@
-# Nuxt Minimal Starter
+# Alaska Sea Ice
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This Git repository contains code and data related to viewing and analyzing sea ice and associated map layers in Alaska. The repository provides tools and resources to monitor and study sea ice in the region.
 
-## Setup
+## Installation
 
-Make sure to install dependencies:
+To install and run this project locally, follow these steps:
 
-```bash
-# npm
-npm install
+1. Clone the repository to your local machine using the following command:
 
-# pnpm
-pnpm install
+   ```
+   git clone https://github.com/username/alaska-sea-ice.git
+   ```
 
-# yarn
-yarn install
+2. Navigate to the project directory:
 
-# bun
-bun install
-```
+   ```
+   cd alaska-sea-ice
+   ```
 
-## Development Server
+3. Install the required dependencies:
 
-Start the development server on `http://localhost:3000`:
+   ```
+   npm install
+   ```
 
-```bash
-# npm
-npm run dev
+4. Start the application:
 
-# pnpm
-pnpm dev
+   ```
+   npm run dev
+   ```
 
-# yarn
-yarn dev
+## Usage
 
-# bun
-bun run dev
-```
+Once the application is running, you can access it by opening your web browser and navigating to `http://localhost:8080`.
 
-## Production
+## License
 
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+This project is licensed under the [MIT License](LICENSE).
