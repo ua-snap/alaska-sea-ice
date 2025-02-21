@@ -30,34 +30,6 @@ watch(currentCRS, (newCrs) => {
 
 const layers: MapLayer[] = [
   {
-    id: "tas_cmip6_2000",
-    title: "2000, GFDL-ESM4",
-    source: "rasdaman",
-    wmsLayerName: "cmip6_monthly",
-    style: "ardac_tas",
-    legend: "tas",
-    rasdamanConfiguration: {
-      dim_model: 3,
-      dim_scenario: 0,
-      time: "2000-07-15T12:00:00.000Z",
-    },
-    coastline: true,
-  },
-  {
-    id: "tas_cmip6_2100",
-    title: "2100, GFDL-ESM4, SSP5-8.5",
-    source: "rasdaman",
-    wmsLayerName: "cmip6_monthly",
-    style: "ardac_tas",
-    legend: "tas",
-    rasdamanConfiguration: {
-      dim_model: 3,
-      dim_scenario: 4,
-      time: "2100-07-15T12:00:00.000Z",
-    },
-    coastline: true,
-  },
-  {
     id: "tasmax_cmip6_2000",
     title: "2000, GFDL-ESM4",
     source: "rasdaman",
@@ -158,21 +130,21 @@ onMounted(() => {
           <h4 class="title is-4 mb-3">
             January Maximum Near-surface Air Temperature
           </h4>
-          <MapLayer :mapId="mapId" :layer="layers[2]">
-            <template v-slot:title>{{ layers[2].title }}</template>
+          <MapLayer :mapId="mapId" :layer="layers[0]" default>
+            <template v-slot:title>{{ layers[0].title }}</template>
           </MapLayer>
-          <MapLayer :mapId="mapId" :layer="layers[3]">
-            <template v-slot:title>{{ layers[3].title }}</template>
+          <MapLayer :mapId="mapId" :layer="layers[1]">
+            <template v-slot:title>{{ layers[1].title }}</template>
           </MapLayer>
           <hr />
           <h4 class="title is-4 mb-3">
             January Minimum Near-surface Air Temperature
           </h4>
-          <MapLayer :mapId="mapId" :layer="layers[4]">
-            <template v-slot:title>{{ layers[4].title }}</template>
+          <MapLayer :mapId="mapId" :layer="layers[2]">
+            <template v-slot:title>{{ layers[2].title }}</template>
           </MapLayer>
-          <MapLayer :mapId="mapId" :layer="layers[5]">
-            <template v-slot:title>{{ layers[5].title }}</template>
+          <MapLayer :mapId="mapId" :layer="layers[3]">
+            <template v-slot:title>{{ layers[3].title }}</template>
           </MapLayer>
         </template>
       </MapBlock>
