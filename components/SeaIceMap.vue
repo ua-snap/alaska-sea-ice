@@ -280,6 +280,7 @@ onMounted(() => {
           <MapLayer :mapId="mapId" :layer="layers[6]">
             <template v-slot:title>{{ layers[6].title }}</template>
           </MapLayer>
+          <hr />
           <h4 class="title is-4 mb-3">Chukchi Sea Landfast Sea Ice</h4>
           <MapLayer :mapId="mapId" :layer="layers[7]">
             <template v-slot:title>{{ layers[7].title }}</template>
