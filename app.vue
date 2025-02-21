@@ -52,7 +52,7 @@
               </li>
             </ul>
           </div>
-          <MapBlock mapId="map1" crs="EPSG:3338"> </MapBlock>
+          <SeaIceMap mapId="map1" crs="EPSG:3338"> </SeaIceMap>
         </div>
       </section>
     </div>
