@@ -30,6 +30,63 @@ watch(currentCRS, (newCrs) => {
 
 const layers: MapLayer[] = [
   {
+    id: "siconc_cmip6_1950",
+    title: "March 1950, MIROC6",
+    source: "rasdaman",
+    wmsLayerName: "cmip6_monthly",
+    style: "ardac_siconc",
+    legend: "siconc",
+    default: true,
+    rasdamanConfiguration: {
+      dim_model: 7,
+      dim_scenario: 0,
+      time: "1950-03-15T12:00:00.000Z",
+    },
+    coastline: true,
+  },
+  {
+    id: "siconc_cmip6_2000",
+    title: "March 2000, MIROC6",
+    source: "rasdaman",
+    wmsLayerName: "cmip6_monthly",
+    style: "ardac_siconc",
+    legend: "siconc",
+    rasdamanConfiguration: {
+      dim_model: 7,
+      dim_scenario: 0,
+      time: "2000-03-15T12:00:00.000Z",
+    },
+    coastline: true,
+  },
+  {
+    id: "siconc_cmip6_2050",
+    title: "March 2050, MIROC6",
+    source: "rasdaman",
+    wmsLayerName: "cmip6_monthly",
+    style: "ardac_siconc",
+    legend: "siconc",
+    rasdamanConfiguration: {
+      dim_model: 7,
+      dim_scenario: 4,
+      time: "2050-03-15T12:00:00.000Z",
+    },
+    coastline: true,
+  },
+  {
+    id: "siconc_cmip6_2100",
+    title: "March 2100, MIROC6",
+    source: "rasdaman",
+    wmsLayerName: "cmip6_monthly",
+    style: "ardac_siconc",
+    legend: "siconc",
+    rasdamanConfiguration: {
+      dim_model: 7,
+      dim_scenario: 4,
+      time: "2100-03-15T12:00:00.000Z",
+    },
+    coastline: true,
+  },
+  {
     id: "tasmax_cmip6_2000",
     title: "2000, GFDL-ESM4",
     source: "rasdaman",
@@ -88,6 +145,12 @@ const layers: MapLayer[] = [
 ];
 
 const legend: Record<string, LegendItem[]> = {
+  siconc: [
+    { color: "#045a8d", label: "0&#37; &ndash; 70&#37;" },
+    { color: "#2b8cbe", label: "70&#37; &ndash; 80&#37;" },
+    { color: "#74a9cf", label: "80&#37; &ndash; 90&#37;" },
+    { color: "#bdc9e1", label: "90&#37; &ndash; 100&#37;" },
+  ],
   tas: [
     { color: "#6468ac", label: "&lt;-20°C" },
     { color: "#7394c1", label: "&ge;-20°C, &lt;-15°C" },
@@ -126,25 +189,39 @@ onMounted(() => {
 
       <MapBlock :mapId="mapId" crs="EPSG:3572" class="mb-6">
         <template v-slot:layers>
-          <h3>Temperature Variables</h3>
-          <h4 class="title is-4 mb-3">
-            January Maximum Near-surface Air Temperature
-          </h4>
+          <h3>Sea Ice Concentration</h3>
+          <h4 class="title is-4 mb-3">March Sea Ice Concentration</h4>
           <MapLayer :mapId="mapId" :layer="layers[0]" default>
             <template v-slot:title>{{ layers[0].title }}</template>
           </MapLayer>
           <MapLayer :mapId="mapId" :layer="layers[1]">
             <template v-slot:title>{{ layers[1].title }}</template>
           </MapLayer>
-          <hr />
-          <h4 class="title is-4 mb-3">
-            January Minimum Near-surface Air Temperature
-          </h4>
           <MapLayer :mapId="mapId" :layer="layers[2]">
             <template v-slot:title>{{ layers[2].title }}</template>
           </MapLayer>
           <MapLayer :mapId="mapId" :layer="layers[3]">
             <template v-slot:title>{{ layers[3].title }}</template>
+          </MapLayer>
+          <h3>Temperature Variables</h3>
+          <h4 class="title is-4 mb-3">
+            January Maximum Near-surface Air Temperature
+          </h4>
+          <MapLayer :mapId="mapId" :layer="layers[4]" default>
+            <template v-slot:title>{{ layers[4].title }}</template>
+          </MapLayer>
+          <MapLayer :mapId="mapId" :layer="layers[5]">
+            <template v-slot:title>{{ layers[5].title }}</template>
+          </MapLayer>
+          <hr />
+          <h4 class="title is-4 mb-3">
+            January Minimum Near-surface Air Temperature
+          </h4>
+          <MapLayer :mapId="mapId" :layer="layers[6]">
+            <template v-slot:title>{{ layers[6].title }}</template>
+          </MapLayer>
+          <MapLayer :mapId="mapId" :layer="layers[7]">
+            <template v-slot:title>{{ layers[7].title }}</template>
           </MapLayer>
         </template>
       </MapBlock>
