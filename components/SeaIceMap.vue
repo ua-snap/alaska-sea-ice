@@ -1,6 +1,32 @@
 <script lang="ts" setup>
+import { ref, watch } from "vue";
+import { useMapStore } from "@/stores/map";
+
 const mapStore = useMapStore();
-const runtimeConfig = useRuntimeConfig();
+const mapId = "tas";
+
+const activeLayer = ref<MapLayer | null>(null);
+
+const currentCRS = ref("EPSG:3572");
+
+const toggleCRS = () => {
+  currentCRS.value =
+    currentCRS.value === "EPSG:3572" ? "EPSG:3338" : "EPSG:3572";
+};
+
+watch(currentCRS, (newCrs) => {
+  activeLayer.value = mapStore.activeLayers[mapId] || null;
+  mapStore.destroy(mapId);
+  mapStore.create(mapId, newCrs);
+  if (activeLayer.value !== null) {
+    setTimeout(() => {
+      mapStore.toggleLayer({
+        mapId,
+        layer: activeLayer.value as MapLayer,
+      });
+    }, 500);
+  }
+});
 
 const layers: MapLayer[] = [
   {
@@ -41,7 +67,7 @@ const layers: MapLayer[] = [
     rasdamanConfiguration: {
       dim_model: 3,
       dim_scenario: 0,
-      time: "2000-07-15T12:00:00.000Z",
+      time: "2000-01-15T12:00:00.000Z",
     },
     coastline: true,
   },
@@ -55,7 +81,7 @@ const layers: MapLayer[] = [
     rasdamanConfiguration: {
       dim_model: 3,
       dim_scenario: 4,
-      time: "2100-07-15T12:00:00.000Z",
+      time: "2100-01-15T12:00:00.000Z",
     },
     coastline: true,
   },
@@ -104,39 +130,33 @@ const legend: Record<string, LegendItem[]> = {
   ],
 };
 
-const mapId = "tas";
-mapStore.setLegendItems(mapId, legend);
+onMounted(() => {
+  mapStore.setLegendItems(mapId, legend);
+});
 </script>
 
 <template>
   <section class="section xray">
     <div class="content is-size-5">
-      <h3 class="title is-3">Consecutive Wet Days</h3>
-      <XrayIntroblurb resolution="~12" unit="km" cmip="5" />
-      <p class="mb-6">
-        Consecutive wet days are the number of the most consecutive days with at
-        least 1㎜ precipitation. The map below shows the 30-year mean of
-        consecutive wet days for three eras. The historical era
-        (1980&ndash;2009) uses historical modeled data provided by the Daymet
-        model. The mid-century (2040&ndash;2069) and late-century
-        (2070&ndash;2099) eras use modeled projections from the NCAR CCSM4 model
-        under the RCP 8.5 emissions scenario.
-      </p>
+      <h3 class="title is-3">Sea Ice</h3>
+
+      <div class="field">
+        <label class="label">Map Projection</label>
+        <div class="control">
+          <label class="switch">
+            <input type="checkbox" @change="toggleCRS" />
+            <span class="slider round"></span>
+          </label>
+          <span v-if="currentCRS === 'EPSG:3572'">Circumpolar Map</span>
+          <span v-else>Alaska-centered Map</span>
+        </div>
+      </div>
 
       <MapBlock :mapId="mapId" crs="EPSG:3572" class="mb-6">
         <template v-slot:layers>
+          <h3>Temperature Variables</h3>
           <h4 class="title is-4 mb-3">
-            July Mean Near-surface Air Temperature
-          </h4>
-          <MapLayer :mapId="mapId" :layer="layers[0]" default>
-            <template v-slot:title>{{ layers[0].title }}</template>
-          </MapLayer>
-          <MapLayer :mapId="mapId" :layer="layers[1]">
-            <template v-slot:title>{{ layers[1].title }}</template>
-          </MapLayer>
-          <hr />
-          <h4 class="title is-4 mb-3">
-            July Maximum Near-surface Air Temperature
+            January Maximum Near-surface Air Temperature
           </h4>
           <MapLayer :mapId="mapId" :layer="layers[2]">
             <template v-slot:title>{{ layers[2].title }}</template>
@@ -160,4 +180,51 @@ mapStore.setLegendItems(mapId, legend);
   </section>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* 🟢 Style for the switch toggle */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 20px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4caf50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(14px);
+}
+</style>
