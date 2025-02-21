@@ -52,6 +52,7 @@
               </li>
             </ul>
           </div>
+          <MapBlock mapId="map1" crs="EPSG:3338"> </MapBlock>
         </div>
       </section>
     </div>
