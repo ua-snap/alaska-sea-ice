@@ -18,13 +18,19 @@ To install and run this project locally, follow these steps:
    cd alaska-sea-ice
    ```
 
-3. Install the required dependencies:
+3. Ensure you are using LTS Hydrogen
+
+   ```
+   nvm install lts/hydrogen
+   ```
+
+4. Install the required dependencies:
 
    ```
    npm install
    ```
 
-4. Start the application:
+5. Start the application:
 
    ```
    npm run dev
