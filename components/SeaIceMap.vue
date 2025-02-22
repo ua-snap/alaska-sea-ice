@@ -245,7 +245,11 @@ onMounted(() => {
         <label class="label">Map Projection</label>
         <div class="control">
           <label class="switch">
-            <input type="checkbox" @change="toggleCRS" />
+            <input
+              type="checkbox"
+              @change="toggleCRS"
+              :checked="currentCRS === 'EPSG:3572'"
+            />
             <span class="slider round"></span>
           </label>
           <span v-if="currentCRS === 'EPSG:3572'">Circumpolar Map</span>
