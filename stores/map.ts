@@ -17,7 +17,9 @@ export const useMapStore = defineStore("map", () => {
   const maps: { [index: string]: any } = {};
 
   // Current CRS for the map
-  const currentCRS = ref("EPSG:3572");
+  var currentCRS = ref("EPSG:3572");
+
+  var forcedCRS: boolean = false;
 
   // Active layer Leaflet objects, keyed like `maps` var above
   var layerObjects: { [index: string]: any } = {};
@@ -123,8 +125,15 @@ export const useMapStore = defineStore("map", () => {
   }
 
   const toggleCRS = () => {
-    currentCRS.value =
-      currentCRS.value === "EPSG:3572" ? "EPSG:3338" : "EPSG:3572";
+    if (currentCRS.value == "EPSG:3572") {
+      setCRS("EPSG:3338");
+    } else {
+      setCRS("EPSG:3572");
+    }
+  };
+
+  const setCRS = (crs: string) => {
+    currentCRS.value = crs;
   };
 
   // `legends` is an object with keys corresponding to the name of the
@@ -350,5 +359,7 @@ export const useMapStore = defineStore("map", () => {
     addLegend,
     currentCRS,
     toggleCRS,
+    setCRS,
+    forcedCRS,
   };
 });

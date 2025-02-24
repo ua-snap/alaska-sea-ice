@@ -6,6 +6,7 @@ const props = defineProps<{
   layer: MapLayer;
   mapId: string;
   default?: boolean;
+  forcedCRS?: string;
 }>();
 
 const { activeLayers } = storeToRefs(mapStore);
@@ -15,11 +16,20 @@ const active = computed(() => {
 });
 
 async function toggleLayer() {
-  await nextTick(); // so this doesn't fire before the map DOM is ready
+  await nextTick();
   mapStore.toggleLayer({
     layer: props.layer,
     mapId: props.mapId,
   });
+
+  // If a layer requires a particular CRS, ensure the map changes and can't
+  // be swapped back until a new layer is clicked.
+  if (props.forcedCRS) {
+    mapStore.forcedCRS = true;
+    mapStore.setCRS(props.forcedCRS);
+  } else {
+    mapStore.forcedCRS = false;
+  }
 }
 
 onMounted(() => {
