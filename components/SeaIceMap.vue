@@ -8,26 +8,22 @@ const mapId = "tas";
 
 const activeLayer = ref<MapLayer | null>(null);
 
-const currentCRS = ref("EPSG:3572");
-
-const toggleCRS = () => {
-  currentCRS.value =
-    currentCRS.value === "EPSG:3572" ? "EPSG:3338" : "EPSG:3572";
-};
-
-watch(currentCRS, (newCrs) => {
-  activeLayer.value = mapStore.activeLayers[mapId] || null;
-  mapStore.destroy(mapId);
-  mapStore.create(mapId, newCrs);
-  if (activeLayer.value !== null) {
-    setTimeout(() => {
-      mapStore.toggleLayer({
-        mapId,
-        layer: activeLayer.value as MapLayer,
-      });
-    }, 500);
-  }
-});
+watch(
+  () => mapStore.currentCRS,
+  (newCrs) => {
+    activeLayer.value = mapStore.activeLayers[mapId] || null;
+    mapStore.destroy(mapId);
+    mapStore.create(mapId, newCrs);
+    if (activeLayer.value !== null) {
+      setTimeout(() => {
+        mapStore.toggleLayer({
+          mapId,
+          layer: activeLayer.value as MapLayer,
+        });
+      }, 500);
+    }
+  },
+);
 
 const layers: MapLayer[] = [
   {
@@ -247,12 +243,14 @@ onMounted(() => {
           <label class="switch">
             <input
               type="checkbox"
-              @change="toggleCRS"
-              :checked="currentCRS === 'EPSG:3572'"
+              @change="mapStore.toggleCRS"
+              :checked="mapStore.currentCRS === 'EPSG:3572'"
             />
             <span class="slider round"></span>
           </label>
-          <span v-if="currentCRS === 'EPSG:3572'">Circumpolar Map</span>
+          <span v-if="mapStore.currentCRS === 'EPSG:3572'"
+            >Circumpolar Map</span
+          >
           <span v-else>Alaska-centered Map</span>
         </div>
       </div>
@@ -275,7 +273,7 @@ onMounted(() => {
           </MapLayer>
           <h3>Landfast Sea Ice</h3>
           <h4 class="title is-4 mb-3">Beaufort Sea Landfast Sea Ice</h4>
-          <MapLayer :mapId="mapId" :layer="layers[4]">
+          <MapLayer :mapId="mapId" :layer="layers[4]" setCRS="EPSG:3338">
             <template v-slot:title>{{ layers[4].title }}</template>
           </MapLayer>
           <MapLayer :mapId="mapId" :layer="layers[5]">
