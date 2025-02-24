@@ -249,10 +249,22 @@ onMounted(() => {
             />
             <span class="slider round"></span>
           </label>
-          <span v-if="mapStore.currentCRS === 'EPSG:3572'"
+
+          <span v-if="mapStore.currentCRS === 'EPSG:3572' && mapStore.forcedCRS"
+            >Circumpolar Map - Map Cannot Change</span
+          >
+          <span
+            v-else-if="
+              mapStore.currentCRS === 'EPSG:3338' && mapStore.forcedCRS
+            "
+            >Alaska-centered Map - Map Cannot Change</span
+          >
+          <span v-else-if="mapStore.currentCRS === 'EPSG:3572'"
             >Circumpolar Map</span
           >
-          <span v-else>Alaska-centered Map</span>
+          <span v-else="mapStore.currentCRS === 'EPSG:3338'"
+            >Alaska-centered Map</span
+          >
         </div>
       </div>
 
