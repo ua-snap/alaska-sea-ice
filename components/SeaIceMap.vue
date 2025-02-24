@@ -245,6 +245,7 @@ onMounted(() => {
               type="checkbox"
               @change="mapStore.toggleCRS"
               :checked="mapStore.currentCRS === 'EPSG:3572'"
+              :disabled="mapStore.forcedCRS"
             />
             <span class="slider round"></span>
           </label>
@@ -273,24 +274,24 @@ onMounted(() => {
           </MapLayer>
           <h3>Landfast Sea Ice</h3>
           <h4 class="title is-4 mb-3">Beaufort Sea Landfast Sea Ice</h4>
-          <MapLayer :mapId="mapId" :layer="layers[4]" setCRS="EPSG:3338">
+          <MapLayer :mapId="mapId" :layer="layers[4]" forcedCRS="EPSG:3338">
             <template v-slot:title>{{ layers[4].title }}</template>
           </MapLayer>
-          <MapLayer :mapId="mapId" :layer="layers[5]">
+          <MapLayer :mapId="mapId" :layer="layers[5]" forcedCRS="EPSG:3338">
             <template v-slot:title>{{ layers[5].title }}</template>
           </MapLayer>
-          <MapLayer :mapId="mapId" :layer="layers[6]">
+          <MapLayer :mapId="mapId" :layer="layers[6]" forcedCRS="EPSG:3338">
             <template v-slot:title>{{ layers[6].title }}</template>
           </MapLayer>
           <hr />
           <h4 class="title is-4 mb-3">Chukchi Sea Landfast Sea Ice</h4>
-          <MapLayer :mapId="mapId" :layer="layers[7]">
+          <MapLayer :mapId="mapId" :layer="layers[7]" forcedCRS="EPSG:3338">
             <template v-slot:title>{{ layers[7].title }}</template>
           </MapLayer>
-          <MapLayer :mapId="mapId" :layer="layers[8]">
+          <MapLayer :mapId="mapId" :layer="layers[8]" forcedCRS="EPSG:3338">
             <template v-slot:title>{{ layers[8].title }}</template>
           </MapLayer>
-          <MapLayer :mapId="mapId" :layer="layers[9]">
+          <MapLayer :mapId="mapId" :layer="layers[9]" forcedCRS="EPSG:3338">
             <template v-slot:title>{{ layers[9].title }}</template>
           </MapLayer>
           <h3>Temperature Variables</h3>
