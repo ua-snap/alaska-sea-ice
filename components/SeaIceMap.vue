@@ -199,6 +199,90 @@ const layers: MapLayer[] = [
     },
     coastline: true,
   },
+  {
+    id: "sfcWind_cmip6_2000",
+    title: "August 2000, EC-Earth3-Veg",
+    source: "rasdaman",
+    wmsLayerName: "cmip6_monthly",
+    style: "ardac_sfcWind",
+    legend: "sfcWind",
+    rasdamanConfiguration: {
+      dim_model: 2,
+      dim_scenario: 0,
+      time: "2000-08-15T12:00:00.000Z",
+    },
+    coastline: true,
+  },
+  {
+    id: "sfcWind_cmip6_2100",
+    title: "August 2100, EC-Earth3-Veg, SSP5-8.5",
+    source: "rasdaman",
+    wmsLayerName: "cmip6_monthly",
+    style: "ardac_sfcWind",
+    legend: "sfcWind",
+    rasdamanConfiguration: {
+      dim_model: 2,
+      dim_scenario: 4,
+      time: "2100-08-15T12:00:00.000Z",
+    },
+    coastline: true,
+  },
+  {
+    id: "uas_cmip6_2000",
+    title: "August 2000, EC-Earth3-Veg",
+    source: "rasdaman",
+    wmsLayerName: "cmip6_monthly",
+    style: "ardac_uas",
+    legend: "uas",
+    rasdamanConfiguration: {
+      dim_model: 2,
+      dim_scenario: 0,
+      time: "2000-08-15T12:00:00.000Z",
+    },
+    coastline: true,
+  },
+  {
+    id: "uas_cmip6_2100",
+    title: "August 2100, EC-Earth3-Veg, SSP5-8.5",
+    source: "rasdaman",
+    wmsLayerName: "cmip6_monthly",
+    style: "ardac_uas",
+    legend: "uas",
+    rasdamanConfiguration: {
+      dim_model: 2,
+      dim_scenario: 4,
+      time: "2100-08-15T12:00:00.000Z",
+    },
+    coastline: true,
+  },
+  {
+    id: "vas_cmip6_2000",
+    title: "August 2000, EC-Earth3-Veg",
+    source: "rasdaman",
+    wmsLayerName: "cmip6_monthly",
+    style: "ardac_vas",
+    legend: "vas",
+    rasdamanConfiguration: {
+      dim_model: 2,
+      dim_scenario: 0,
+      time: "2000-08-15T12:00:00.000Z",
+    },
+    coastline: true,
+  },
+  {
+    id: "vas_cmip6_2100",
+    title: "August 2100, EC-Earth3-Veg, SSP5-8.5",
+    source: "rasdaman",
+    wmsLayerName: "cmip6_monthly",
+    style: "ardac_vas",
+    legend: "vas",
+    rasdamanConfiguration: {
+      dim_model: 2,
+      dim_scenario: 4,
+      time: "2100-08-15T12:00:00.000Z",
+    },
+    coastline: true,
+  },
 ];
 
 const legend: Record<string, LegendItem[]> = {
@@ -224,6 +308,33 @@ const legend: Record<string, LegendItem[]> = {
     { color: "#ef9073", label: "&ge;10°C, &lt;15°C" },
     { color: "#dc6961", label: "&ge;15°C, &lt;20°C" },
     { color: "#ba505e", label: "&ge;20°C" },
+  ],
+  sfcWind: [
+    { color: "#5c5c5c", label: "&ge;0 m/s, &lt;1.5 m/s" },
+    { color: "#878787", label: "&ge;1.5 m/s, &lt;3 m/s" },
+    { color: "#ababab", label: "&ge;3 m/s, &lt;4.5 m/s" },
+    { color: "#d1d1d1", label: "&ge;4.5 m/s, &lt;6 m/s" },
+    { color: "#efefef", label: "&ge;6 m/s" },
+  ],
+  uas: [
+    { color: "#cf5c9a", label: "&lt;-3 m/s" },
+    { color: "#e096bd", label: "&ge;-3 m/s, &lt;-2 m/s" },
+    { color: "#ecc2da", label: "&ge;-2 m/s, &lt;-1 m/s" },
+    { color: "#f3dfea", label: "&ge;-1 m/s, &lt;0 m/s" },
+    { color: "#e3eed5", label: "&ge;0 m/s, &lt;1 m/s" },
+    { color: "#c4dfa1", label: "&ge;1 m/s, &lt;2 m/s" },
+    { color: "#9cc674", label: "&ge;2 m/s, &lt;3 m/s" },
+    { color: "#7aa95f", label: "&ge;3 m/s" },
+  ],
+  vas: [
+    { color: "#cf5c9a", label: "&lt;-3 m/s" },
+    { color: "#e096bd", label: "&ge;-3 m/s, &lt;-2 m/s" },
+    { color: "#ecc2da", label: "&ge;-2 m/s, &lt;-1 m/s" },
+    { color: "#f3dfea", label: "&ge;-1 m/s, &lt;0 m/s" },
+    { color: "#e3eed5", label: "&ge;0 m/s, &lt;1 m/s" },
+    { color: "#c4dfa1", label: "&ge;1 m/s, &lt;2 m/s" },
+    { color: "#9cc674", label: "&ge;2 m/s, &lt;3 m/s" },
+    { color: "#7aa95f", label: "&ge;3 m/s" },
   ],
 };
 
@@ -326,6 +437,28 @@ onMounted(() => {
           <MapLayer :mapId="mapId" :layer="layers[13]">
             <template v-slot:title>{{ layers[13].title }}</template>
           </MapLayer>
+          <h3>Wind Variables</h3>
+          <h4>December Near-surface Wind Speed</h4>
+          <MapLayer :mapId="mapId" :layer="layers[14]">
+            <template v-slot:title>{{ layers[14].title }}</template>
+          </MapLayer>
+          <MapLayer :mapId="mapId" :layer="layers[15]">
+            <template v-slot:title>{{ layers[15].title }}</template>
+          </MapLayer>
+          <h4>December Near-surface Eastward Wind Speed</h4>
+          <MapLayer :mapId="mapId" :layer="layers[16]">
+            <template v-slot:title>{{ layers[16].title }}</template>
+          </MapLayer>
+          <MapLayer :mapId="mapId" :layer="layers[17]">
+            <template v-slot:title>{{ layers[17].title }}</template>
+          </MapLayer>
+          <h4>December Near-surface Northward Wind Speed</h4>
+          <MapLayer :mapId="mapId" :layer="layers[18]">
+            <template v-slot:title>{{ layers[18].title }}</template>
+          </MapLayer>
+          <MapLayer :mapId="mapId" :layer="layers[19]">
+            <template v-slot:title>{{ layers[19].title }}</template>
+          </MapLayer>
         </template>
       </MapBlock>
     </div>
@@ -333,7 +466,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* 🟢 Style for the switch toggle */
 .switch {
   position: relative;
   display: inline-block;
