@@ -381,8 +381,7 @@ onMounted(() => {
 
       <MapBlock :mapId="mapId" crs="EPSG:3572" class="mb-6">
         <template v-slot:layers>
-          <h3>Sea Ice Concentration</h3>
-          <h4 class="title is-4 mb-3">March Sea Ice Concentration</h4>
+          <h4 class="title is-4 mb-3">Sea Ice Concentration</h4>
           <MapLayer :mapId="mapId" :layer="layers[0]" default>
             <template v-slot:title>{{ layers[0].title }}</template>
           </MapLayer>
