@@ -1,6 +1,6 @@
 <template>
   <div class="columns">
-    <div class="column is-one-third mt-3 ml-4">
+    <div class="column is-one-third mt-3 ml-4 layers-container">
       <slot name="layers"></slot>
     </div>
     <div class="column">
@@ -16,4 +16,9 @@ const props = defineProps<{
 }>();
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.layers-container {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+</style>
