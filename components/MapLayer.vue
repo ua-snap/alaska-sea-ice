@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useMapStore } from "~/stores/map";
-const mapStore = useMapStore();
+import LayerFields from "./LayerFields.vue";
 
+const mapStore = useMapStore();
 const props = defineProps<{
   layer: MapLayer;
   mapId: string;
@@ -22,8 +23,6 @@ async function toggleLayer() {
     mapId: props.mapId,
   });
 
-  // If a layer requires a particular CRS, ensure the map changes and can't
-  // be swapped back until a new layer is clicked.
   if (props.forcedCRS) {
     mapStore.forcedCRS = true;
     mapStore.setCRS(props.forcedCRS);
@@ -55,6 +54,10 @@ onMounted(() => {
       <div v-if="active">&#x25b6;</div>
     </span>
   </div>
+
+  <div v-if="active" class="layer-fields-container">
+    <LayerFields />
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -85,5 +88,13 @@ onMounted(() => {
     align-items: center;
     font-size: 125%;
   }
+}
+
+.layer-fields-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  margin-top: 10px;
 }
 </style>
