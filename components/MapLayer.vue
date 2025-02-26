@@ -39,6 +39,8 @@ const submitLayerConfig = (newConfig: {
 
     if (newConfig.year > 2014) {
       props.layer.rasdamanConfiguration.dim_scenario = 4;
+    } else {
+      props.layer.rasdamanConfiguration.dim_scenario = 0;
     }
 
     props.layer.rasdamanConfiguration.time = time;
