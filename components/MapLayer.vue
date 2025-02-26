@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { useMapStore } from "~/stores/map";
+import { useMapStore } from "@/stores/map";
+import { computed, nextTick } from "vue";
 import LayerFields from "./LayerFields.vue";
 
 const mapStore = useMapStore();
@@ -10,11 +11,9 @@ const props = defineProps<{
   forcedCRS?: string;
 }>();
 
-const { activeLayers } = storeToRefs(mapStore);
-
-const active = computed(() => {
-  return activeLayers.value[props.mapId]?.id === props.layer.id;
-});
+const active = computed(
+  () => mapStore.activeLayers[props.mapId]?.id === props.layer.id,
+);
 
 async function toggleLayer() {
   await nextTick();
@@ -31,11 +30,25 @@ async function toggleLayer() {
   }
 }
 
-onMounted(() => {
-  if (props.default === true) {
-    toggleLayer();
+const submitLayerConfig = (newConfig: {
+  month: number | null;
+  year: number | null;
+}) => {
+  if (newConfig.month && newConfig.year) {
+    const time = `${newConfig.year}-${newConfig.month < 10 ? "0" + newConfig.month : newConfig.month}-15T12:00:00.000Z`;
+
+    if (newConfig.year > 2014) {
+      props.layer.rasdamanConfiguration.dim_scenario = 4;
+    }
+
+    props.layer.rasdamanConfiguration.time = time;
+
+    mapStore.toggleLayer({
+      layer: props.layer,
+      mapId: props.mapId,
+    });
   }
-});
+};
 </script>
 
 <template>
@@ -56,7 +69,7 @@ onMounted(() => {
   </div>
 
   <div v-if="active" class="layer-fields-container">
-    <LayerFields />
+    <LayerFields @submitLayerConfig="submitLayerConfig" />
   </div>
 </template>
 
