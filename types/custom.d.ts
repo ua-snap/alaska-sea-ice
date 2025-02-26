@@ -43,6 +43,7 @@ interface MapLayer {
   rasdamanConfiguration?: any;
   coastline?: boolean;
   bbox?: number[];
+  validTimeRange?: string;
 }
 
 interface MapLayerInstance {
