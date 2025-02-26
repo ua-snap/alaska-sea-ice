@@ -40,6 +40,7 @@ const layers: MapLayer[] = [
       time: "1950-03-15T12:00:00.000Z",
     },
     coastline: true,
+    validTimeRange: "1950,2100",
   },
   {
     id: "siconc_cmip6_2000",
@@ -92,6 +93,7 @@ const layers: MapLayer[] = [
     legend: "landfast_sea_ice",
     rasdamanConfiguration: { time: "2000-03-01T00:00:00.000Z" },
     coastline: true,
+    validTimeRange: "1997,2022",
   },
   {
     id: "ardac_beaufort_daily_slie_2010",
@@ -122,6 +124,7 @@ const layers: MapLayer[] = [
     legend: "landfast_sea_ice",
     rasdamanConfiguration: { time: "2000-03-01T00:00:00.000Z" },
     coastline: true,
+    validTimeRange: "1997,2022",
   },
   {
     id: "ardac_chukchi_daily_slie_2010",
@@ -156,6 +159,7 @@ const layers: MapLayer[] = [
       time: "2000-01-15T12:00:00.000Z",
     },
     coastline: true,
+    validTimeRange: "1950,2100",
   },
   {
     id: "tasmax_cmip6_2100",
@@ -184,6 +188,7 @@ const layers: MapLayer[] = [
       time: "2000-01-15T12:00:00.000Z",
     },
     coastline: true,
+    validTimeRange: "1950,2100",
   },
   {
     id: "tasmin_cmip6_2100",
@@ -212,6 +217,7 @@ const layers: MapLayer[] = [
       time: "2000-08-15T12:00:00.000Z",
     },
     coastline: true,
+    validTimeRange: "1950,2100",
   },
   {
     id: "sfcWind_cmip6_2100",
@@ -240,6 +246,7 @@ const layers: MapLayer[] = [
       time: "2000-08-15T12:00:00.000Z",
     },
     coastline: true,
+    validTimeRange: "1950,2100",
   },
   {
     id: "uas_cmip6_2100",
@@ -268,6 +275,7 @@ const layers: MapLayer[] = [
       time: "2000-08-15T12:00:00.000Z",
     },
     coastline: true,
+    validTimeRange: "1950,2100",
   },
   {
     id: "vas_cmip6_2100",
