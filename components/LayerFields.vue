@@ -2,7 +2,15 @@
   <div class="layer-fields">
     <div class="field">
       <label for="month">Month:</label>
-      <input type="number" id="month" v-model="month" min="1" max="12" />
+      <select v-model="month" id="month">
+        <option
+          v-for="(monthName, index) in monthNames"
+          :key="index"
+          :value="index"
+        >
+          {{ monthName }}
+        </option>
+      </select>
     </div>
 
     <div class="field">
@@ -26,6 +34,20 @@ const emit = defineEmits<{
   ): void;
 }>();
 
+const monthNames = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 const month = ref<number | null>(null);
 const year = ref<number | null>(null);
 

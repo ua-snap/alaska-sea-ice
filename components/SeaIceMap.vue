@@ -243,12 +243,12 @@ onMounted(() => {
           </MapLayer>
           <h3>Landfast Sea Ice</h3>
           <h4 class="title is-4 mb-3">Beaufort Sea Landfast Sea Ice</h4>
-          <MapLayer :mapId="mapId" :layer="layers[1]">
+          <MapLayer :mapId="mapId" :layer="layers[1]" forcedCRS="EPSG:3338">
             <template v-slot:title>{{ layers[1].title }}</template>
           </MapLayer>
           <hr />
           <h4 class="title is-4 mb-3">Chukchi Sea Landfast Sea Ice</h4>
-          <MapLayer :mapId="mapId" :layer="layers[2]">
+          <MapLayer :mapId="mapId" :layer="layers[2]" forcedCRS="EPSG:3338">
             <template v-slot:title>{{ layers[2].title }}</template>
           </MapLayer>
           <h3>Temperature Variables</h3>
