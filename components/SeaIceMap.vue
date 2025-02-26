@@ -27,8 +27,8 @@ watch(
 
 const layers: MapLayer[] = [
   {
-    id: "siconc_cmip6_1950",
-    title: "March 1950, MIROC6",
+    id: "siconc_cmip6",
+    title: "January 1950, MIROC6",
     source: "rasdaman",
     wmsLayerName: "cmip6_monthly",
     style: "ardac_siconc",
@@ -37,118 +37,36 @@ const layers: MapLayer[] = [
     rasdamanConfiguration: {
       dim_model: 7,
       dim_scenario: 0,
-      time: "1950-03-15T12:00:00.000Z",
+      time: "1950-01-15T12:00:00.000Z",
     },
     coastline: true,
     validTimeRange: "1950,2100",
   },
   {
-    id: "siconc_cmip6_2000",
-    title: "March 2000, MIROC6",
-    source: "rasdaman",
-    wmsLayerName: "cmip6_monthly",
-    style: "ardac_siconc",
-    legend: "siconc",
-    rasdamanConfiguration: {
-      dim_model: 7,
-      dim_scenario: 0,
-      time: "2000-03-15T12:00:00.000Z",
-    },
-    coastline: true,
-  },
-  {
-    id: "siconc_cmip6_2050",
-    title: "March 2050, MIROC6",
-    source: "rasdaman",
-    wmsLayerName: "cmip6_monthly",
-    style: "ardac_siconc",
-    legend: "siconc",
-    rasdamanConfiguration: {
-      dim_model: 7,
-      dim_scenario: 4,
-      time: "2050-03-15T12:00:00.000Z",
-    },
-    coastline: true,
-  },
-  {
-    id: "siconc_cmip6_2100",
-    title: "March 2100, MIROC6",
-    source: "rasdaman",
-    wmsLayerName: "cmip6_monthly",
-    style: "ardac_siconc",
-    legend: "siconc",
-    rasdamanConfiguration: {
-      dim_model: 7,
-      dim_scenario: 4,
-      time: "2100-03-15T12:00:00.000Z",
-    },
-    coastline: true,
-  },
-  {
-    id: "ardac_beaufort_daily_slie_2000",
-    title: "March 1st, 2000",
+    id: "ardac_beaufort_daily_slie",
+    title: "January 1997",
     source: "rasdaman",
     wmsLayerName: "ardac_beaufort_daily_slie",
     style: "ardac_daily_slie",
     legend: "landfast_sea_ice",
-    rasdamanConfiguration: { time: "2000-03-01T00:00:00.000Z" },
+    rasdamanConfiguration: { time: "1997-01-01T00:00:00.000Z" },
     coastline: true,
     validTimeRange: "1997,2022",
   },
   {
-    id: "ardac_beaufort_daily_slie_2010",
-    title: "March 1st, 2010",
-    source: "rasdaman",
-    wmsLayerName: "ardac_beaufort_daily_slie",
-    style: "ardac_daily_slie",
-    legend: "landfast_sea_ice",
-    rasdamanConfiguration: { time: "2010-03-01T00:00:00.000Z" },
-    coastline: true,
-  },
-  {
-    id: "ardac_beaufort_daily_slie_2020",
-    title: "March 1st, 2020",
-    source: "rasdaman",
-    wmsLayerName: "ardac_beaufort_daily_slie",
-    style: "ardac_daily_slie",
-    legend: "landfast_sea_ice",
-    rasdamanConfiguration: { time: "2020-03-01T00:00:00.000Z" },
-    coastline: true,
-  },
-  {
-    id: "ardac_chukchi_daily_slie_2000",
-    title: "March 1st, 2000",
+    id: "ardac_chukchi_daily_slie",
+    title: "January 1997",
     source: "rasdaman",
     wmsLayerName: "ardac_chukchi_daily_slie",
     style: "ardac_daily_slie",
     legend: "landfast_sea_ice",
-    rasdamanConfiguration: { time: "2000-03-01T00:00:00.000Z" },
+    rasdamanConfiguration: { time: "1997-01-01T00:00:00.000Z" },
     coastline: true,
     validTimeRange: "1997,2022",
   },
   {
-    id: "ardac_chukchi_daily_slie_2010",
-    title: "March 1st, 2010",
-    source: "rasdaman",
-    wmsLayerName: "ardac_chukchi_daily_slie",
-    style: "ardac_daily_slie",
-    legend: "landfast_sea_ice",
-    rasdamanConfiguration: { time: "2010-03-01T00:00:00.000Z" },
-    coastline: true,
-  },
-  {
-    id: "ardac_chukchi_daily_slie_2020",
-    title: "March 1st, 2020",
-    source: "rasdaman",
-    wmsLayerName: "ardac_chukchi_daily_slie",
-    style: "ardac_daily_slie",
-    legend: "landfast_sea_ice",
-    rasdamanConfiguration: { time: "2020-03-01T00:00:00.000Z" },
-    coastline: true,
-  },
-  {
-    id: "tasmax_cmip6_2000",
-    title: "2000, GFDL-ESM4",
+    id: "tasmax_cmip6",
+    title: "January 1950, GFDL-ESM4",
     source: "rasdaman",
     wmsLayerName: "cmip6_monthly",
     style: "ardac_tasmax",
@@ -156,28 +74,14 @@ const layers: MapLayer[] = [
     rasdamanConfiguration: {
       dim_model: 3,
       dim_scenario: 0,
-      time: "2000-01-15T12:00:00.000Z",
+      time: "1950-01-15T12:00:00.000Z",
     },
     coastline: true,
     validTimeRange: "1950,2100",
   },
   {
-    id: "tasmax_cmip6_2100",
-    title: "2100, GFDL-ESM4, SSP5-8.5",
-    source: "rasdaman",
-    wmsLayerName: "cmip6_monthly",
-    style: "ardac_tasmax",
-    legend: "tas",
-    rasdamanConfiguration: {
-      dim_model: 3,
-      dim_scenario: 4,
-      time: "2100-01-15T12:00:00.000Z",
-    },
-    coastline: true,
-  },
-  {
-    id: "tasmin_cmip6_2000",
-    title: "2000, GFDL-ESM4",
+    id: "tasmin_cmip6",
+    title: "January 1950, GFDL-ESM4",
     source: "rasdaman",
     wmsLayerName: "cmip6_monthly",
     style: "ardac_tasmin",
@@ -185,28 +89,14 @@ const layers: MapLayer[] = [
     rasdamanConfiguration: {
       dim_model: 3,
       dim_scenario: 0,
-      time: "2000-01-15T12:00:00.000Z",
+      time: "1950-01-15T12:00:00.000Z",
     },
     coastline: true,
     validTimeRange: "1950,2100",
   },
   {
-    id: "tasmin_cmip6_2100",
-    title: "2100, GFDL-ESM4, SSP5-8.5",
-    source: "rasdaman",
-    wmsLayerName: "cmip6_monthly",
-    style: "ardac_tasmin",
-    legend: "tas",
-    rasdamanConfiguration: {
-      dim_model: 3,
-      dim_scenario: 4,
-      time: "2100-01-15T12:00:00.000Z",
-    },
-    coastline: true,
-  },
-  {
-    id: "sfcWind_cmip6_2000",
-    title: "August 2000, EC-Earth3-Veg",
+    id: "sfcWind_cmip6",
+    title: "January 1950, EC-Earth3-Veg",
     source: "rasdaman",
     wmsLayerName: "cmip6_monthly",
     style: "ardac_sfcWind",
@@ -214,28 +104,14 @@ const layers: MapLayer[] = [
     rasdamanConfiguration: {
       dim_model: 2,
       dim_scenario: 0,
-      time: "2000-08-15T12:00:00.000Z",
+      time: "1950-01-15T12:00:00.000Z",
     },
     coastline: true,
     validTimeRange: "1950,2100",
   },
   {
-    id: "sfcWind_cmip6_2100",
-    title: "August 2100, EC-Earth3-Veg, SSP5-8.5",
-    source: "rasdaman",
-    wmsLayerName: "cmip6_monthly",
-    style: "ardac_sfcWind",
-    legend: "sfcWind",
-    rasdamanConfiguration: {
-      dim_model: 2,
-      dim_scenario: 4,
-      time: "2100-08-15T12:00:00.000Z",
-    },
-    coastline: true,
-  },
-  {
-    id: "uas_cmip6_2000",
-    title: "August 2000, EC-Earth3-Veg",
+    id: "uas_cmip6",
+    title: "January 1950, EC-Earth3-Veg",
     source: "rasdaman",
     wmsLayerName: "cmip6_monthly",
     style: "ardac_uas",
@@ -243,28 +119,14 @@ const layers: MapLayer[] = [
     rasdamanConfiguration: {
       dim_model: 2,
       dim_scenario: 0,
-      time: "2000-08-15T12:00:00.000Z",
+      time: "1950-01-15T12:00:00.000Z",
     },
     coastline: true,
     validTimeRange: "1950,2100",
   },
   {
-    id: "uas_cmip6_2100",
-    title: "August 2100, EC-Earth3-Veg, SSP5-8.5",
-    source: "rasdaman",
-    wmsLayerName: "cmip6_monthly",
-    style: "ardac_uas",
-    legend: "uas",
-    rasdamanConfiguration: {
-      dim_model: 2,
-      dim_scenario: 4,
-      time: "2100-08-15T12:00:00.000Z",
-    },
-    coastline: true,
-  },
-  {
-    id: "vas_cmip6_2000",
-    title: "August 2000, EC-Earth3-Veg",
+    id: "vas_cmip6",
+    title: "January 1950, EC-Earth3-Veg",
     source: "rasdaman",
     wmsLayerName: "cmip6_monthly",
     style: "ardac_vas",
@@ -272,24 +134,10 @@ const layers: MapLayer[] = [
     rasdamanConfiguration: {
       dim_model: 2,
       dim_scenario: 0,
-      time: "2000-08-15T12:00:00.000Z",
+      time: "1950-01-15T12:00:00.000Z",
     },
     coastline: true,
     validTimeRange: "1950,2100",
-  },
-  {
-    id: "vas_cmip6_2100",
-    title: "August 2100, EC-Earth3-Veg, SSP5-8.5",
-    source: "rasdaman",
-    wmsLayerName: "cmip6_monthly",
-    style: "ardac_vas",
-    legend: "vas",
-    rasdamanConfiguration: {
-      dim_model: 2,
-      dim_scenario: 4,
-      time: "2100-08-15T12:00:00.000Z",
-    },
-    coastline: true,
   },
 ];
 
@@ -393,78 +241,38 @@ onMounted(() => {
           <MapLayer :mapId="mapId" :layer="layers[0]" default>
             <template v-slot:title>{{ layers[0].title }}</template>
           </MapLayer>
+          <h3>Landfast Sea Ice</h3>
+          <h4 class="title is-4 mb-3">Beaufort Sea Landfast Sea Ice</h4>
           <MapLayer :mapId="mapId" :layer="layers[1]">
             <template v-slot:title>{{ layers[1].title }}</template>
           </MapLayer>
+          <hr />
+          <h4 class="title is-4 mb-3">Chukchi Sea Landfast Sea Ice</h4>
           <MapLayer :mapId="mapId" :layer="layers[2]">
             <template v-slot:title>{{ layers[2].title }}</template>
           </MapLayer>
+          <h3>Temperature Variables</h3>
+          <h4 class="title is-4 mb-3">Maximum Near-surface Air Temperature</h4>
           <MapLayer :mapId="mapId" :layer="layers[3]">
             <template v-slot:title>{{ layers[3].title }}</template>
           </MapLayer>
-          <h3>Landfast Sea Ice</h3>
-          <h4 class="title is-4 mb-3">Beaufort Sea Landfast Sea Ice</h4>
-          <MapLayer :mapId="mapId" :layer="layers[4]" forcedCRS="EPSG:3338">
+          <hr />
+          <h4 class="title is-4 mb-3">Minimum Near-surface Air Temperature</h4>
+          <MapLayer :mapId="mapId" :layer="layers[4]">
             <template v-slot:title>{{ layers[4].title }}</template>
           </MapLayer>
-          <MapLayer :mapId="mapId" :layer="layers[5]" forcedCRS="EPSG:3338">
+          <h3>Wind Variables</h3>
+          <h4>Near-surface Wind Speed</h4>
+          <MapLayer :mapId="mapId" :layer="layers[5]">
             <template v-slot:title>{{ layers[5].title }}</template>
           </MapLayer>
-          <MapLayer :mapId="mapId" :layer="layers[6]" forcedCRS="EPSG:3338">
+          <h4>Near-surface Eastward Wind Speed</h4>
+          <MapLayer :mapId="mapId" :layer="layers[6]">
             <template v-slot:title>{{ layers[6].title }}</template>
           </MapLayer>
-          <hr />
-          <h4 class="title is-4 mb-3">Chukchi Sea Landfast Sea Ice</h4>
-          <MapLayer :mapId="mapId" :layer="layers[7]" forcedCRS="EPSG:3338">
+          <h4>Near-surface Northward Wind Speed</h4>
+          <MapLayer :mapId="mapId" :layer="layers[7]">
             <template v-slot:title>{{ layers[7].title }}</template>
-          </MapLayer>
-          <MapLayer :mapId="mapId" :layer="layers[8]" forcedCRS="EPSG:3338">
-            <template v-slot:title>{{ layers[8].title }}</template>
-          </MapLayer>
-          <MapLayer :mapId="mapId" :layer="layers[9]" forcedCRS="EPSG:3338">
-            <template v-slot:title>{{ layers[9].title }}</template>
-          </MapLayer>
-          <h3>Temperature Variables</h3>
-          <h4 class="title is-4 mb-3">
-            January Maximum Near-surface Air Temperature
-          </h4>
-          <MapLayer :mapId="mapId" :layer="layers[10]">
-            <template v-slot:title>{{ layers[10].title }}</template>
-          </MapLayer>
-          <MapLayer :mapId="mapId" :layer="layers[11]">
-            <template v-slot:title>{{ layers[11].title }}</template>
-          </MapLayer>
-          <hr />
-          <h4 class="title is-4 mb-3">
-            January Minimum Near-surface Air Temperature
-          </h4>
-          <MapLayer :mapId="mapId" :layer="layers[12]">
-            <template v-slot:title>{{ layers[12].title }}</template>
-          </MapLayer>
-          <MapLayer :mapId="mapId" :layer="layers[13]">
-            <template v-slot:title>{{ layers[13].title }}</template>
-          </MapLayer>
-          <h3>Wind Variables</h3>
-          <h4>December Near-surface Wind Speed</h4>
-          <MapLayer :mapId="mapId" :layer="layers[14]">
-            <template v-slot:title>{{ layers[14].title }}</template>
-          </MapLayer>
-          <MapLayer :mapId="mapId" :layer="layers[15]">
-            <template v-slot:title>{{ layers[15].title }}</template>
-          </MapLayer>
-          <h4>December Near-surface Eastward Wind Speed</h4>
-          <MapLayer :mapId="mapId" :layer="layers[16]">
-            <template v-slot:title>{{ layers[16].title }}</template>
-          </MapLayer>
-          <MapLayer :mapId="mapId" :layer="layers[17]">
-            <template v-slot:title>{{ layers[17].title }}</template>
-          </MapLayer>
-          <h4>December Near-surface Northward Wind Speed</h4>
-          <MapLayer :mapId="mapId" :layer="layers[18]">
-            <template v-slot:title>{{ layers[18].title }}</template>
-          </MapLayer>
-          <MapLayer :mapId="mapId" :layer="layers[19]">
-            <template v-slot:title>{{ layers[19].title }}</template>
           </MapLayer>
         </template>
       </MapBlock>
