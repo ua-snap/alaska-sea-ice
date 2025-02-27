@@ -6,6 +6,8 @@ import LayerFields from "./LayerFields.vue";
 
 const mapStore = useMapStore();
 const mapId = "siconc_cmip6";
+const selectedMonth = ref<number>(1);
+const selectedYear = ref<number>(1950);
 
 const activeLayer = computed(() => mapStore.activeLayers[mapId] || null);
 
@@ -199,42 +201,48 @@ onMounted(() => {
   mapStore.setLegendItems(mapId, legend);
 });
 
-function submitLayerConfig(newConfig: {
+watch(activeLayer, (newLayer) => {
+  if (newLayer) {
+    updateLayerConfig(selectedMonth.value, selectedYear.value);
+  }
+});
+
+function updateLayerConfig(month: number, year: number) {
+  if (!activeLayer.value) return;
+
+  if (activeLayer.value.validTimeRange) {
+    const [start, end] = activeLayer.value.validTimeRange.split(",");
+    if (year < Number(start)) {
+      alert("Minimum year for layer is " + start);
+      year = Number(start);
+    } else if (year > Number(end)) {
+      alert("Maximum year for layer is " + end);
+      year = Number(end);
+    }
+  }
+
+  const originalTime = activeLayer.value.rasdamanConfiguration.time;
+  const timeParts = originalTime.split("-");
+  const dayPart = timeParts[2] || "15T12:00:00.000Z";
+  const monthStr = month < 10 ? "0" + month : month;
+  const newTime = `${year}-${monthStr}-${dayPart}`;
+
+  activeLayer.value.rasdamanConfiguration.dim_scenario = year > 2014 ? 4 : 0;
+  activeLayer.value.rasdamanConfiguration.time = newTime;
+
+  mapStore.toggleLayer({
+    mapId,
+    layer: activeLayer.value,
+  });
+}
+
+function handleLayerFieldsUpdate(payload: {
   month: number | null;
   year: number | null;
 }) {
-  if (!activeLayer.value) {
-    alert("No active layer selected.");
-    return;
-  }
-  if (newConfig.month && newConfig.year) {
-    if (activeLayer.value.validTimeRange) {
-      const [start, end] = activeLayer.value.validTimeRange.split(",");
-      if (newConfig.year < Number(start) || newConfig.year > Number(end)) {
-        alert("Invalid date range");
-        return;
-      }
-    }
-    const originalTime = activeLayer.value.rasdamanConfiguration.time;
-    const timeParts = originalTime.split("-");
-    const dayPart = timeParts[2] || "15T12:00:00.000Z";
-    const monthStr =
-      newConfig.month < 10 ? "0" + newConfig.month : newConfig.month;
-    const newTime = `${newConfig.year}-${monthStr}-${dayPart}`;
-
-    // Adjust the scenario based on the year since historical ends at 2014
-    if (newConfig.year > 2014) {
-      activeLayer.value.rasdamanConfiguration.dim_scenario = 4;
-    } else {
-      activeLayer.value.rasdamanConfiguration.dim_scenario = 0;
-    }
-    activeLayer.value.rasdamanConfiguration.time = newTime;
-
-    mapStore.toggleLayer({
-      mapId,
-      layer: activeLayer.value,
-    });
-  }
+  selectedMonth.value = payload.month ?? 1;
+  selectedYear.value = payload.year ?? 1950;
+  updateLayerConfig(selectedMonth.value, selectedYear.value);
 }
 </script>
 
@@ -244,7 +252,7 @@ function submitLayerConfig(newConfig: {
       <h3 class="title is-3">Sea Ice</h3>
       <div class="map-container">
         <div v-if="activeLayer" class="layer-fields-wrapper">
-          <LayerFields @submitLayerConfig="submitLayerConfig" />
+          <LayerFields @submitLayerConfig="handleLayerFieldsUpdate" />
         </div>
 
         <div class="field">
