@@ -30,7 +30,7 @@ watch(
 const layers: MapLayer[] = [
   {
     id: "siconc_cmip6",
-    title: "January 1950, MIROC6",
+    title: "Sea Ice Concentration, MIROC6",
     source: "rasdaman",
     wmsLayerName: "cmip6_monthly",
     style: "ardac_siconc",
@@ -46,7 +46,7 @@ const layers: MapLayer[] = [
   },
   {
     id: "ardac_beaufort_daily_slie",
-    title: "January 1997",
+    title: "Beaufort Sea Landfast Sea Ice",
     source: "rasdaman",
     wmsLayerName: "ardac_beaufort_daily_slie",
     style: "ardac_daily_slie",
@@ -57,7 +57,7 @@ const layers: MapLayer[] = [
   },
   {
     id: "ardac_chukchi_daily_slie",
-    title: "January 1997",
+    title: "Chukchi Sea Landfast Sea Ice",
     source: "rasdaman",
     wmsLayerName: "ardac_chukchi_daily_slie",
     style: "ardac_daily_slie",
@@ -68,7 +68,7 @@ const layers: MapLayer[] = [
   },
   {
     id: "tasmax_cmip6",
-    title: "January 1950, GFDL-ESM4",
+    title: "Maximum Near-surface Air Temperature, GFDL-ESM4",
     source: "rasdaman",
     wmsLayerName: "cmip6_monthly",
     style: "ardac_tasmax",
@@ -83,7 +83,7 @@ const layers: MapLayer[] = [
   },
   {
     id: "tasmin_cmip6",
-    title: "January 1950, GFDL-ESM4",
+    title: "Minimum Near-surface Air Temperature, GFDL-ESM4",
     source: "rasdaman",
     wmsLayerName: "cmip6_monthly",
     style: "ardac_tasmin",
@@ -98,7 +98,7 @@ const layers: MapLayer[] = [
   },
   {
     id: "sfcWind_cmip6",
-    title: "January 1950, EC-Earth3-Veg",
+    title: "Near-surface Wind Speed, EC-Earth3-Veg",
     source: "rasdaman",
     wmsLayerName: "cmip6_monthly",
     style: "ardac_sfcWind",
@@ -113,7 +113,7 @@ const layers: MapLayer[] = [
   },
   {
     id: "uas_cmip6",
-    title: "January 1950, EC-Earth3-Veg",
+    title: "Near-surface Eastward Wind Speed, EC-Earth3-Veg",
     source: "rasdaman",
     wmsLayerName: "cmip6_monthly",
     style: "ardac_uas",
@@ -128,7 +128,7 @@ const layers: MapLayer[] = [
   },
   {
     id: "vas_cmip6",
-    title: "January 1950, EC-Earth3-Veg",
+    title: "Near-surface Northward Wind Speed, EC-Earth3-Veg",
     source: "rasdaman",
     wmsLayerName: "cmip6_monthly",
     style: "ardac_vas",
@@ -286,44 +286,27 @@ function submitLayerConfig(newConfig: {
 
         <MapBlock :mapId="mapId" crs="EPSG:3572" class="mb-6">
           <template v-slot:layers>
-            <h4 class="title is-4 mb-3">Sea Ice Concentration</h4>
             <MapLayer :mapId="mapId" :layer="layers[0]" default>
               <template v-slot:title>{{ layers[0].title }}</template>
             </MapLayer>
-            <h3>Landfast Sea Ice</h3>
-            <h4 class="title is-4 mb-3">Beaufort Sea Landfast Sea Ice</h4>
             <MapLayer :mapId="mapId" :layer="layers[1]" forcedCRS="EPSG:3338">
               <template v-slot:title>{{ layers[1].title }}</template>
             </MapLayer>
-            <hr />
-            <h4 class="title is-4 mb-3">Chukchi Sea Landfast Sea Ice</h4>
             <MapLayer :mapId="mapId" :layer="layers[2]" forcedCRS="EPSG:3338">
               <template v-slot:title>{{ layers[2].title }}</template>
             </MapLayer>
-            <h3>Temperature Variables</h3>
-            <h4 class="title is-4 mb-3">
-              Maximum Near-surface Air Temperature
-            </h4>
             <MapLayer :mapId="mapId" :layer="layers[3]">
               <template v-slot:title>{{ layers[3].title }}</template>
             </MapLayer>
-            <hr />
-            <h4 class="title is-4 mb-3">
-              Minimum Near-surface Air Temperature
-            </h4>
             <MapLayer :mapId="mapId" :layer="layers[4]">
               <template v-slot:title>{{ layers[4].title }}</template>
             </MapLayer>
-            <h3>Wind Variables</h3>
-            <h4>Near-surface Wind Speed</h4>
             <MapLayer :mapId="mapId" :layer="layers[5]">
               <template v-slot:title>{{ layers[5].title }}</template>
             </MapLayer>
-            <h4>Near-surface Eastward Wind Speed</h4>
             <MapLayer :mapId="mapId" :layer="layers[6]">
               <template v-slot:title>{{ layers[6].title }}</template>
             </MapLayer>
-            <h4>Near-surface Northward Wind Speed</h4>
             <MapLayer :mapId="mapId" :layer="layers[7]">
               <template v-slot:title>{{ layers[7].title }}</template>
             </MapLayer>
