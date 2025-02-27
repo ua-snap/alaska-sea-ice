@@ -16,6 +16,12 @@ const active = computed(
   () => mapStore.activeLayers[props.mapId]?.id === props.layer.id,
 );
 
+onMounted(() => {
+  if (props.default === true) {
+    toggleLayer();
+  }
+});
+
 async function toggleLayer() {
   await nextTick();
   mapStore.toggleLayer({
@@ -30,37 +36,6 @@ async function toggleLayer() {
     mapStore.forcedCRS = false;
   }
 }
-
-const submitLayerConfig = (newConfig: {
-  month: number | null;
-  year: number | null;
-}) => {
-  if (newConfig.month && newConfig.year) {
-    if (props.layer.validTimeRange) {
-      const [start, end] = props.layer.validTimeRange.split(",");
-
-      if (newConfig.year < Number(start) || newConfig.year > Number(end)) {
-        // TODO: Change this to be a more user-friendly alert
-        alert("Invalid date range");
-        return;
-      }
-    }
-    const time = `${newConfig.year}-${newConfig.month < 10 ? "0" + newConfig.month : newConfig.month}-${props.layer.rasdamanConfiguration.time.split("-")[2]}`;
-
-    if (newConfig.year > 2014) {
-      props.layer.rasdamanConfiguration.dim_scenario = 4;
-    } else {
-      props.layer.rasdamanConfiguration.dim_scenario = 0;
-    }
-
-    props.layer.rasdamanConfiguration.time = time;
-
-    mapStore.toggleLayer({
-      layer: props.layer,
-      mapId: props.mapId,
-    });
-  }
-};
 </script>
 
 <template>
@@ -78,10 +53,6 @@ const submitLayerConfig = (newConfig: {
     <span class="tile is-child active-pointer">
       <div v-if="active">&#x25b6;</div>
     </span>
-  </div>
-
-  <div v-if="active" class="layer-fields-container">
-    <LayerFields @submitLayerConfig="submitLayerConfig" />
   </div>
 </template>
 
