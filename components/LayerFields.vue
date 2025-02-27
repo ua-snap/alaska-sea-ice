@@ -72,8 +72,8 @@ const decreaseYear = () => {
 };
 
 const decreaseMonth = () => {
-  if (month.value === 0) {
-    month.value = 11;
+  if (month.value === 1) {
+    month.value = 12;
     year.value -= 1;
   } else {
     month.value -= 1;
@@ -82,8 +82,8 @@ const decreaseMonth = () => {
 };
 
 const increaseMonth = () => {
-  if (month.value === 11) {
-    month.value = 0;
+  if (month.value === 12) {
+    month.value = 1;
     year.value += 1;
   } else {
     month.value += 1;
