@@ -5,9 +5,8 @@ import MapLayer from "./MapLayer.vue";
 import LayerFields from "./LayerFields.vue";
 
 const mapStore = useMapStore();
-const mapId = "tas";
+const mapId = "siconc_cmip6";
 
-// Use a computed property to always reference the current active layer
 const activeLayer = computed(() => mapStore.activeLayers[mapId] || null);
 
 watch(
@@ -200,8 +199,6 @@ onMounted(() => {
   mapStore.setLegendItems(mapId, legend);
 });
 
-// Handler for the LayerFields submission.
-// This function adjusts the active layer’s configuration and then re-toggles the layer.
 function submitLayerConfig(newConfig: {
   month: number | null;
   year: number | null;
@@ -225,7 +222,7 @@ function submitLayerConfig(newConfig: {
       newConfig.month < 10 ? "0" + newConfig.month : newConfig.month;
     const newTime = `${newConfig.year}-${monthStr}-${dayPart}`;
 
-    // Adjust the scenario dimension based on the year
+    // Adjust the scenario based on the year since historical ends at 2014
     if (newConfig.year > 2014) {
       activeLayer.value.rasdamanConfiguration.dim_scenario = 4;
     } else {
@@ -246,7 +243,6 @@ function submitLayerConfig(newConfig: {
     <div class="content is-size-5">
       <h3 class="title is-3">Sea Ice</h3>
       <div class="map-container">
-        <!-- LayerFields component positioned above the map inside a stylized wrapper -->
         <div v-if="activeLayer" class="layer-fields-wrapper">
           <LayerFields @submitLayerConfig="submitLayerConfig" />
         </div>
@@ -323,7 +319,6 @@ function submitLayerConfig(newConfig: {
   width: 100%;
 }
 
-/* Wrapper for the LayerFields */
 .layer-fields-wrapper {
   position: absolute;
   top: -1.3%;
@@ -339,7 +334,6 @@ function submitLayerConfig(newConfig: {
   z-index: 1000;
 }
 
-/* Ensure the field inputs are properly aligned */
 .layer-fields-wrapper .layer-fields {
   display: flex;
   justify-content: space-around;
