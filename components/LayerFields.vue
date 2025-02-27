@@ -11,7 +11,7 @@
         <option
           v-for="(monthName, index) in monthNames"
           :key="index"
-          :value="index"
+          :value="index + 1"
         >
           {{ monthName }}
         </option>
@@ -59,8 +59,8 @@ const monthNames = [
   "Dec",
 ];
 
-const month = ref<number>(0);
-const year = ref<number>(1950);
+const month = ref<number>(1);
+const year = ref<number>(2020);
 
 const submit = () => {
   emit("submitLayerConfig", { month: month.value, year: year.value });

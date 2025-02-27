@@ -7,7 +7,7 @@ import LayerFields from "./LayerFields.vue";
 const mapStore = useMapStore();
 const mapId = "siconc_cmip6";
 const selectedMonth = ref<number>(1);
-const selectedYear = ref<number>(1950);
+const selectedYear = ref<number>(2020);
 
 const activeLayer = computed(() => mapStore.activeLayers[mapId] || null);
 
@@ -40,7 +40,7 @@ const layers: MapLayer[] = [
     rasdamanConfiguration: {
       dim_model: 7,
       dim_scenario: 0,
-      time: "1950-01-15T12:00:00.000Z",
+      time: "2020-01-15T12:00:00.000Z",
     },
     coastline: true,
     validTimeRange: "1950,2100",
@@ -52,7 +52,7 @@ const layers: MapLayer[] = [
     wmsLayerName: "ardac_beaufort_daily_slie",
     style: "ardac_daily_slie",
     legend: "landfast_sea_ice",
-    rasdamanConfiguration: { time: "1997-01-01T00:00:00.000Z" },
+    rasdamanConfiguration: { time: "2020-01-01T00:00:00.000Z" },
     coastline: true,
     validTimeRange: "1997,2022",
   },
@@ -63,7 +63,7 @@ const layers: MapLayer[] = [
     wmsLayerName: "ardac_chukchi_daily_slie",
     style: "ardac_daily_slie",
     legend: "landfast_sea_ice",
-    rasdamanConfiguration: { time: "1997-01-01T00:00:00.000Z" },
+    rasdamanConfiguration: { time: "2020-01-01T00:00:00.000Z" },
     coastline: true,
     validTimeRange: "1997,2022",
   },
@@ -77,7 +77,7 @@ const layers: MapLayer[] = [
     rasdamanConfiguration: {
       dim_model: 3,
       dim_scenario: 0,
-      time: "1950-01-15T12:00:00.000Z",
+      time: "2020-01-15T12:00:00.000Z",
     },
     coastline: true,
     validTimeRange: "1950,2100",
@@ -92,7 +92,7 @@ const layers: MapLayer[] = [
     rasdamanConfiguration: {
       dim_model: 3,
       dim_scenario: 0,
-      time: "1950-01-15T12:00:00.000Z",
+      time: "2020-01-15T12:00:00.000Z",
     },
     coastline: true,
     validTimeRange: "1950,2100",
@@ -107,7 +107,7 @@ const layers: MapLayer[] = [
     rasdamanConfiguration: {
       dim_model: 2,
       dim_scenario: 0,
-      time: "1950-01-15T12:00:00.000Z",
+      time: "2020-01-15T12:00:00.000Z",
     },
     coastline: true,
     validTimeRange: "1950,2100",
@@ -122,7 +122,7 @@ const layers: MapLayer[] = [
     rasdamanConfiguration: {
       dim_model: 2,
       dim_scenario: 0,
-      time: "1950-01-15T12:00:00.000Z",
+      time: "2020-01-15T12:00:00.000Z",
     },
     coastline: true,
     validTimeRange: "1950,2100",
@@ -137,7 +137,7 @@ const layers: MapLayer[] = [
     rasdamanConfiguration: {
       dim_model: 2,
       dim_scenario: 0,
-      time: "1950-01-15T12:00:00.000Z",
+      time: "2020-01-15T12:00:00.000Z",
     },
     coastline: true,
     validTimeRange: "1950,2100",
@@ -290,28 +290,43 @@ function handleLayerFieldsUpdate(payload: {
 
         <MapBlock :mapId="mapId" crs="EPSG:3572" class="mb-6">
           <template v-slot:layers>
-            <MapLayer :mapId="mapId" :layer="layers[0]" default>
+            <MapLayer
+              :mapId="mapId"
+              :layer="layers[0]"
+              default
+              :year="selectedYear"
+            >
               <template v-slot:title>{{ layers[0].title }}</template>
             </MapLayer>
-            <MapLayer :mapId="mapId" :layer="layers[1]" forcedCRS="EPSG:3338">
+            <MapLayer
+              :mapId="mapId"
+              :layer="layers[1]"
+              forcedCRS="EPSG:3338"
+              :year="selectedYear"
+            >
               <template v-slot:title>{{ layers[1].title }}</template>
             </MapLayer>
-            <MapLayer :mapId="mapId" :layer="layers[2]" forcedCRS="EPSG:3338">
+            <MapLayer
+              :mapId="mapId"
+              :layer="layers[2]"
+              forcedCRS="EPSG:3338"
+              :year="selectedYear"
+            >
               <template v-slot:title>{{ layers[2].title }}</template>
             </MapLayer>
-            <MapLayer :mapId="mapId" :layer="layers[3]">
+            <MapLayer :mapId="mapId" :layer="layers[3]" :year="selectedYear">
               <template v-slot:title>{{ layers[3].title }}</template>
             </MapLayer>
-            <MapLayer :mapId="mapId" :layer="layers[4]">
+            <MapLayer :mapId="mapId" :layer="layers[4]" :year="selectedYear">
               <template v-slot:title>{{ layers[4].title }}</template>
             </MapLayer>
-            <MapLayer :mapId="mapId" :layer="layers[5]">
+            <MapLayer :mapId="mapId" :layer="layers[5]" :year="selectedYear">
               <template v-slot:title>{{ layers[5].title }}</template>
             </MapLayer>
-            <MapLayer :mapId="mapId" :layer="layers[6]">
+            <MapLayer :mapId="mapId" :layer="layers[6]" :year="selectedYear">
               <template v-slot:title>{{ layers[6].title }}</template>
             </MapLayer>
-            <MapLayer :mapId="mapId" :layer="layers[7]">
+            <MapLayer :mapId="mapId" :layer="layers[7]" :year="selectedYear">
               <template v-slot:title>{{ layers[7].title }}</template>
             </MapLayer>
           </template>
