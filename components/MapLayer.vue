@@ -9,20 +9,29 @@ const props = defineProps<{
   mapId: string;
   default?: boolean;
   forcedCRS?: string;
-  validTimeRange?: string;
+  year?: number;
 }>();
 
 const active = computed(
   () => mapStore.activeLayers[props.mapId]?.id === props.layer.id,
 );
 
+const isYearValid = computed(() => {
+  if (!props.layer.validTimeRange || props.year === undefined) return true;
+
+  const [start, end] = props.layer.validTimeRange.split(",").map(Number);
+
+  return props.year >= start && props.year <= end;
+});
+
 onMounted(() => {
-  if (props.default === true) {
+  if (props.default === true && isYearValid.value) {
     toggleLayer();
   }
 });
 
 async function toggleLayer() {
+  if (!isYearValid.value) return;
   await nextTick();
   mapStore.toggleLayer({
     layer: props.layer,
@@ -40,9 +49,9 @@ async function toggleLayer() {
 
 <template>
   <div
-    @click="toggleLayer"
+    @click="isYearValid ? toggleLayer() : null"
     class="layer tile is-ancestor is-parent"
-    :class="{ active: active }"
+    :class="{ active: active, disabled: !isYearValid }"
   >
     <span class="tile is-child layer-wrapper">
       <div class="layer-title">
@@ -66,6 +75,12 @@ async function toggleLayer() {
   &.active {
     font-weight: 600;
     background-color: #f2c716;
+  }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
   .layer-wrapper {
