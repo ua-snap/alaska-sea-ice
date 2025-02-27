@@ -1,24 +1,26 @@
 <script lang="ts" setup>
-import { ref, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useMapStore } from "@/stores/map";
 import MapLayer from "./MapLayer.vue";
+import LayerFields from "./LayerFields.vue";
 
 const mapStore = useMapStore();
 const mapId = "tas";
 
-const activeLayer = ref<MapLayer | null>(null);
+// Use a computed property to always reference the current active layer
+const activeLayer = computed(() => mapStore.activeLayers[mapId] || null);
 
 watch(
   () => mapStore.currentCRS,
   (newCrs) => {
-    activeLayer.value = mapStore.activeLayers[mapId] || null;
+    // When CRS changes, destroy and recreate the map.
     mapStore.destroy(mapId);
     mapStore.create(mapId, newCrs);
     if (activeLayer.value !== null) {
       setTimeout(() => {
         mapStore.toggleLayer({
           mapId,
-          layer: activeLayer.value as MapLayer,
+          layer: activeLayer.value,
         });
       }, 500);
     }
@@ -197,90 +199,170 @@ const legend: Record<string, LegendItem[]> = {
 onMounted(() => {
   mapStore.setLegendItems(mapId, legend);
 });
+
+// Handler for the LayerFields submission.
+// This function adjusts the active layer’s configuration and then re-toggles the layer.
+function submitLayerConfig(newConfig: {
+  month: number | null;
+  year: number | null;
+}) {
+  if (!activeLayer.value) {
+    alert("No active layer selected.");
+    return;
+  }
+  if (newConfig.month && newConfig.year) {
+    if (activeLayer.value.validTimeRange) {
+      const [start, end] = activeLayer.value.validTimeRange.split(",");
+      if (newConfig.year < Number(start) || newConfig.year > Number(end)) {
+        alert("Invalid date range");
+        return;
+      }
+    }
+    const originalTime = activeLayer.value.rasdamanConfiguration.time;
+    const timeParts = originalTime.split("-");
+    const dayPart = timeParts[2] || "15T12:00:00.000Z";
+    const monthStr =
+      newConfig.month < 10 ? "0" + newConfig.month : newConfig.month;
+    const newTime = `${newConfig.year}-${monthStr}-${dayPart}`;
+
+    // Adjust the scenario dimension based on the year
+    if (newConfig.year > 2014) {
+      activeLayer.value.rasdamanConfiguration.dim_scenario = 4;
+    } else {
+      activeLayer.value.rasdamanConfiguration.dim_scenario = 0;
+    }
+    activeLayer.value.rasdamanConfiguration.time = newTime;
+
+    mapStore.toggleLayer({
+      mapId,
+      layer: activeLayer.value,
+    });
+  }
+}
 </script>
 
 <template>
   <section class="section xray">
     <div class="content is-size-5">
       <h3 class="title is-3">Sea Ice</h3>
-
-      <div class="field">
-        <label class="label">Map Projection</label>
-        <div class="control">
-          <label class="switch">
-            <input
-              type="checkbox"
-              @change="mapStore.toggleCRS"
-              :checked="mapStore.currentCRS === 'EPSG:3572'"
-              :disabled="mapStore.forcedCRS"
-            />
-            <span class="slider round"></span>
-          </label>
-
-          <span v-if="mapStore.currentCRS === 'EPSG:3572' && mapStore.forcedCRS"
-            >Circumpolar Map - Map Cannot Change</span
-          >
-          <span
-            v-else-if="
-              mapStore.currentCRS === 'EPSG:3338' && mapStore.forcedCRS
-            "
-            >Alaska-centered Map - Map Cannot Change</span
-          >
-          <span v-else-if="mapStore.currentCRS === 'EPSG:3572'"
-            >Circumpolar Map</span
-          >
-          <span v-else="mapStore.currentCRS === 'EPSG:3338'"
-            >Alaska-centered Map</span
-          >
+      <div class="map-container">
+        <!-- LayerFields component positioned above the map inside a stylized wrapper -->
+        <div v-if="activeLayer" class="layer-fields-wrapper">
+          <LayerFields @submitLayerConfig="submitLayerConfig" />
         </div>
-      </div>
 
-      <MapBlock :mapId="mapId" crs="EPSG:3572" class="mb-6">
-        <template v-slot:layers>
-          <h4 class="title is-4 mb-3">Sea Ice Concentration</h4>
-          <MapLayer :mapId="mapId" :layer="layers[0]" default>
-            <template v-slot:title>{{ layers[0].title }}</template>
-          </MapLayer>
-          <h3>Landfast Sea Ice</h3>
-          <h4 class="title is-4 mb-3">Beaufort Sea Landfast Sea Ice</h4>
-          <MapLayer :mapId="mapId" :layer="layers[1]" forcedCRS="EPSG:3338">
-            <template v-slot:title>{{ layers[1].title }}</template>
-          </MapLayer>
-          <hr />
-          <h4 class="title is-4 mb-3">Chukchi Sea Landfast Sea Ice</h4>
-          <MapLayer :mapId="mapId" :layer="layers[2]" forcedCRS="EPSG:3338">
-            <template v-slot:title>{{ layers[2].title }}</template>
-          </MapLayer>
-          <h3>Temperature Variables</h3>
-          <h4 class="title is-4 mb-3">Maximum Near-surface Air Temperature</h4>
-          <MapLayer :mapId="mapId" :layer="layers[3]">
-            <template v-slot:title>{{ layers[3].title }}</template>
-          </MapLayer>
-          <hr />
-          <h4 class="title is-4 mb-3">Minimum Near-surface Air Temperature</h4>
-          <MapLayer :mapId="mapId" :layer="layers[4]">
-            <template v-slot:title>{{ layers[4].title }}</template>
-          </MapLayer>
-          <h3>Wind Variables</h3>
-          <h4>Near-surface Wind Speed</h4>
-          <MapLayer :mapId="mapId" :layer="layers[5]">
-            <template v-slot:title>{{ layers[5].title }}</template>
-          </MapLayer>
-          <h4>Near-surface Eastward Wind Speed</h4>
-          <MapLayer :mapId="mapId" :layer="layers[6]">
-            <template v-slot:title>{{ layers[6].title }}</template>
-          </MapLayer>
-          <h4>Near-surface Northward Wind Speed</h4>
-          <MapLayer :mapId="mapId" :layer="layers[7]">
-            <template v-slot:title>{{ layers[7].title }}</template>
-          </MapLayer>
-        </template>
-      </MapBlock>
+        <div class="field">
+          <label class="label">Map Projection</label>
+          <div class="control">
+            <label class="switch">
+              <input
+                type="checkbox"
+                @change="mapStore.toggleCRS"
+                :checked="mapStore.currentCRS === 'EPSG:3572'"
+                :disabled="mapStore.forcedCRS"
+              />
+              <span class="slider round"></span>
+            </label>
+            <span
+              v-if="mapStore.currentCRS === 'EPSG:3572' && mapStore.forcedCRS"
+            >
+              Circumpolar Map - Map Cannot Change
+            </span>
+            <span
+              v-else-if="
+                mapStore.currentCRS === 'EPSG:3338' && mapStore.forcedCRS
+              "
+            >
+              Alaska-centered Map - Map Cannot Change
+            </span>
+            <span v-else-if="mapStore.currentCRS === 'EPSG:3572'">
+              Circumpolar Map
+            </span>
+            <span v-else="mapStore.currentCRS === 'EPSG:3338'">
+              Alaska-centered Map
+            </span>
+          </div>
+        </div>
+
+        <MapBlock :mapId="mapId" crs="EPSG:3572" class="mb-6">
+          <template v-slot:layers>
+            <h4 class="title is-4 mb-3">Sea Ice Concentration</h4>
+            <MapLayer :mapId="mapId" :layer="layers[0]" default>
+              <template v-slot:title>{{ layers[0].title }}</template>
+            </MapLayer>
+            <h3>Landfast Sea Ice</h3>
+            <h4 class="title is-4 mb-3">Beaufort Sea Landfast Sea Ice</h4>
+            <MapLayer :mapId="mapId" :layer="layers[1]" forcedCRS="EPSG:3338">
+              <template v-slot:title>{{ layers[1].title }}</template>
+            </MapLayer>
+            <hr />
+            <h4 class="title is-4 mb-3">Chukchi Sea Landfast Sea Ice</h4>
+            <MapLayer :mapId="mapId" :layer="layers[2]" forcedCRS="EPSG:3338">
+              <template v-slot:title>{{ layers[2].title }}</template>
+            </MapLayer>
+            <h3>Temperature Variables</h3>
+            <h4 class="title is-4 mb-3">
+              Maximum Near-surface Air Temperature
+            </h4>
+            <MapLayer :mapId="mapId" :layer="layers[3]">
+              <template v-slot:title>{{ layers[3].title }}</template>
+            </MapLayer>
+            <hr />
+            <h4 class="title is-4 mb-3">
+              Minimum Near-surface Air Temperature
+            </h4>
+            <MapLayer :mapId="mapId" :layer="layers[4]">
+              <template v-slot:title>{{ layers[4].title }}</template>
+            </MapLayer>
+            <h3>Wind Variables</h3>
+            <h4>Near-surface Wind Speed</h4>
+            <MapLayer :mapId="mapId" :layer="layers[5]">
+              <template v-slot:title>{{ layers[5].title }}</template>
+            </MapLayer>
+            <h4>Near-surface Eastward Wind Speed</h4>
+            <MapLayer :mapId="mapId" :layer="layers[6]">
+              <template v-slot:title>{{ layers[6].title }}</template>
+            </MapLayer>
+            <h4>Near-surface Northward Wind Speed</h4>
+            <MapLayer :mapId="mapId" :layer="layers[7]">
+              <template v-slot:title>{{ layers[7].title }}</template>
+            </MapLayer>
+          </template>
+        </MapBlock>
+      </div>
     </div>
   </section>
 </template>
 
 <style scoped>
+.map-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Wrapper for the LayerFields */
+.layer-fields-wrapper {
+  position: absolute;
+  top: -1.3%;
+  left: 67%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 80px;
+  background: linear-gradient(to bottom, #b0b0b0, #d0d0d0);
+  border-radius: 50px 50px 0 0; /* Creates a semi-circle effect */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Ensure the field inputs are properly aligned */
+.layer-fields-wrapper .layer-fields {
+  display: flex;
+  justify-content: space-around;
+  width: 90%;
+}
+
 .switch {
   position: relative;
   display: inline-block;
