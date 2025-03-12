@@ -58,6 +58,11 @@ async function toggleLayer() {
         <slot name="title">{{ layer.title }}</slot>
       </div>
       <div class="subtext"><slot name="subtext"></slot></div>
+      <div v-if="!isYearValid" class="invalid-year">
+        <span>
+          Available years {{ props.layer.validTimeRange?.split(",").join("-") }}
+        </span>
+      </div>
     </span>
     <span class="tile is-child active-pointer">
       <div v-if="active">&#x25b6;</div>
@@ -98,6 +103,13 @@ async function toggleLayer() {
     display: flex;
     align-items: center;
     font-size: 125%;
+  }
+
+  .invalid-year {
+    margin-top: 10px;
+    color: red;
+    font-size: 1rem;
+    font-weight: 600;
   }
 }
 

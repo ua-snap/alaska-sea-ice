@@ -210,17 +210,6 @@ watch(activeLayer, (newLayer) => {
 function updateLayerConfig(month: number, year: number) {
   if (!activeLayer.value) return;
 
-  if (activeLayer.value.validTimeRange) {
-    const [start, end] = activeLayer.value.validTimeRange.split(",");
-    if (year < Number(start)) {
-      alert("Minimum year for layer is " + start);
-      year = Number(start);
-    } else if (year > Number(end)) {
-      alert("Maximum year for layer is " + end);
-      year = Number(end);
-    }
-  }
-
   const originalTime = activeLayer.value.rasdamanConfiguration.time;
   const timeParts = originalTime.split("-");
   const dayPart = timeParts[2] || "15T12:00:00.000Z";
